@@ -1,12 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { AuthModule } from './auth/auth.module';
 import { validationSchema } from './config/env.validation';
 import { ClickHouseModule } from './clickhouse/clickhouse.module';
 import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
+import { OrdersModule } from './orders/orders.module';
+import { PromocodesModule } from './promocodes/promocodes.module';
 import { RedisModule } from './redis/redis.module';
 import { SyncModule } from './sync/sync.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -27,6 +32,11 @@ import { SyncModule } from './sync/sync.module';
     ClickHouseModule,
     RedisModule,
     SyncModule,
+    AnalyticsModule,
+    UsersModule,
+    AuthModule,
+    PromocodesModule,
+    OrdersModule,
     HealthModule,
   ],
 })

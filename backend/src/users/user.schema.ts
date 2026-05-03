@@ -28,3 +28,12 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.set('toJSON', {
+  transform: (_doc, ret) => {
+    const { passwordHash: _omit, ...rest } = ret as User & {
+      passwordHash: string;
+    };
+    return rest;
+  },
+});
