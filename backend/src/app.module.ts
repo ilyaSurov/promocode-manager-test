@@ -3,8 +3,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { validationSchema } from './config/env.validation';
 import { ClickHouseModule } from './clickhouse/clickhouse.module';
+import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
 import { RedisModule } from './redis/redis.module';
+import { SyncModule } from './sync/sync.module';
 
 @Module({
   imports: [
@@ -21,8 +23,10 @@ import { RedisModule } from './redis/redis.module';
       }),
       inject: [ConfigService],
     }),
+    DatabaseModule,
     ClickHouseModule,
     RedisModule,
+    SyncModule,
     HealthModule,
   ],
 })
