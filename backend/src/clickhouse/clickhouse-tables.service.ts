@@ -12,7 +12,15 @@ export class ClickHouseTablesService implements OnApplicationBootstrap {
   ) {}
 
   async onApplicationBootstrap(): Promise<void> {
-    await this.ensureTables();
+    try {
+      await this.ensureTables();
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
+      this.logger.error(
+        `ClickHouse schema init failed — API will still start; auth/Mongo work. ` +
+          `Fix CH credentials or reset the ClickHouse Docker volume. Details: ${msg}`,
+      );
+    }
   }
 
   private async ensureTables(): Promise<void> {

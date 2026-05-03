@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -17,14 +18,22 @@ import { UsersModule } from './users/users.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env', '../.env'],
+      envFilePath: [
+        join(process.cwd(), '.env'),
+        join(process.cwd(), '..', '.env'),
+      ],
       validationSchema,
-      validationOptions: { abortEarly: false },
+      validationOptions: {
+        abortEarly: false,
+        allowUnknown: true,
+        stripUnknown: true,
+      },
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
         uri: config.getOrThrow<string>('MONGODB_URI'),
+        serverSelectionTimeoutMS: 10_000,
       }),
       inject: [ConfigService],
     }),

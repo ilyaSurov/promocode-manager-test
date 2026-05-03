@@ -13,3 +13,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 *.tsbuildinfo
+
+# Локальные заметки разработчика (сценарии тестов UI, шпаргалка к защите)
+_private/
